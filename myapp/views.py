@@ -55,11 +55,11 @@ def upload(request):          #Training model
     return render(request, 'myapp/bs.html',{'img':img1,'form':form})
 
 
-def cnnpredict(request,id):
-    im=Imagemodel.objects.filter(id=id)
-    p=im.photo.path
-    predictions=makepredictions(p)
-    return redirect('/upload',{'im':im,'predict':predictions})
+# def cnnpredict(request,id):
+#     im=Imagemodel.objects.filter(id=id)
+#     p=im.photo.path
+#     predictions=makepredictions(p)
+#     return redirect('/upload',{'im':im,'predict':predictions})
 
 def delete_img(request,id):
     im=Imagemodel.objects.filter(id=id)
@@ -70,25 +70,25 @@ def delete_img(request,id):
 
 
 
-# def test(request):
-#     form=ImageForm(request.POST,request.FILES)
-#     if form.is_valid():
-#         form.save()
-#     form=ImageForm()
-#     img=Imagemodel.objects.all()
-#     return render(request, 'myapp/test.html',{'img':img,'form':form})
 def test(request):
-    if request.method=="POST" and request.FILES['uploaded']:
-        if 'upload' not in request.FILES:
-           err="No images selected"
-           return render(request,'index.html',{'err':err})
-        f=request.FILES['uploaded']
-        if f=="":
-            err="No files selected"
-            return render(request,'index.html',{'err':err})
-        uploaded=request.FILES['uploaded']
-        fss=FileSystemStorage()
-        file=fss.save(uploaded.name,upload)
-        file_url=fss.url(file)
-        predictions=makepredictions(os.path.join(media,file))
-        return render(request,'test.html',{'pred':predictions,'file_url':file_url})
+    form=ImageForm(request.POST,request.FILES)
+    if form.is_valid():
+        form.save()
+    form=ImageForm()
+    img=Imagemodel.objects.all()
+    return render(request, 'myapp/test.html',{'img':img,'form':form})
+# def test(request):
+#     if request.method=="POST" and request.FILES['uploaded']:
+#         if 'upload' not in request.FILES:
+#            err="No images selected"
+#            return render(request,'index.html',{'err':err})
+#         f=request.FILES['uploaded']
+#         if f=="":
+#             err="No files selected"
+#             return render(request,'index.html',{'err':err})
+#         uploaded=request.FILES['uploaded']
+#         fss=FileSystemStorage()
+#         file=fss.save(uploaded.name,upload)
+#         file_url=fss.url(file)
+#         predictions=makepredictions(os.path.join(media,file))
+#         return render(request,'test.html',{'pred':predictions,'file_url':file_url})
